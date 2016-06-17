@@ -1,0 +1,4 @@
+shard:
+  SHARD1IP: 10.0.1.11
+  SHARD2IP: 10.0.1.21
+  SHARD3IP: 10.0.1.31
