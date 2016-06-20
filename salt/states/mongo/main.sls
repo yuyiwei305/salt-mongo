@@ -44,7 +44,43 @@ mongodb-init:
       KEY: {{ pillar['security']['KEY'] }}
     - require:
       - file: mongodb-config
+
+mongodb-configRun:
   cmd.run:
-    - name: mongod -f /etc/mongodb/config.conf
+    - name: bash /etc/mongodb/scripts/config.sh
+    - require: 
+      - file: mongodb-config
+
+
+mongodb-mongosRun:
+  cmd.run:
+    - name: bash /etc/mongodb/scripts/mongosRun.sh
     - require:
-      - file: mongodb-init
+      - cmd: mongodb-configRun
+
+
+
+mongodb-shard1Run:
+  cmd.run:
+    - name: bash /etc/mongodb/scripts/shard1Run.sh
+    - require:
+      - cmd: mongodb-mongosRun
+
+mongodb-shard2Run:
+  cmd.run:
+    - name: bash /etc/mongodb/scripts/shard2Run.sh
+    - require:
+      - cmd: mongodb-mongosRun
+
+
+
+mongodb-shard3Run:
+  cmd.run:
+    - name: bash /etc/mongodb/scripts/shard3Run.sh
+    - require:
+      - cmd: mongodb-mongosRun
+
+
+
+
+
